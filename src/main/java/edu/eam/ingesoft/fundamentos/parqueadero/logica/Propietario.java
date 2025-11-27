@@ -1,5 +1,7 @@
 package edu.eam.ingesoft.fundamentos.parqueadero.logica;
 
+import java.util.ArrayList;
+
 /**
  * Clase que representa un propietario de vehículo en el parqueadero.
  * El propietario es responsable de gestionar su propia información,
@@ -18,11 +20,15 @@ public class Propietario {
     /**
      * Crea una nueva instancia de Propietario.
      * Las horas acumuladas deben iniciar en 0.
+     * 
      * @param cedula Número de identificación único del propietario
      * @param nombre Nombre completo del propietario
      */
     public Propietario(String cedula, String nombre) {
         // TODO: Implementar constructor
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.horasAcumuladas = 0;
     }
 
     // ==================== GETTERS ====================
@@ -56,18 +62,29 @@ public class Propietario {
      */
     public void acumularHoras(int horas) {
         // TODO: Implementar método
-    }
+        ArrayList<Propietario> propietarios = new ArrayList<>();
+        this.horasAcumuladas += horas;
+        return;
+    }  
 
     /**
      * Determina la categoría del cliente según sus horas acumuladas.
      * - ESTANDAR: 0 a 100 horas
      * - ESPECIAL: 101 a 500 horas
      * - VIP: más de 500 horas
+     * 
      * @return La categoría del cliente ("ESTANDAR", "ESPECIAL" o "VIP")
      */
     public String obtenerCategoria() {
         // TODO: Implementar método usando if-else múltiple
-        return null;
+        if (horasAcumuladas <= 100) {
+            return "ESTANDAR";
+        } else if (horasAcumuladas <= 500) {
+            return "ESPECIAL";
+        } else if (horasAcumuladas > 500) {
+            return "VIP";
+        }
+        return "NO DEFINIDO";
     }
 
     /**
@@ -76,19 +93,37 @@ public class Propietario {
      * - ESPECIAL: 10% (0.10)
      * - VIP: 15% (0.15)
      * Pista: Usar el método obtenerCategoria() para saber la categoría
+     * 
      * @return El porcentaje de descuento como valor decimal
      */
     public double obtenerDescuento() {
         // TODO: Implementar método usando switch
+        String categoria = obtenerCategoria();
+        switch (categoria) {
+            case "ESTANDAR":
+                return 0.0;
+            case "ESPECIAL":
+                return 0.10;
+            case "VIP":
+                return 0.15;
+            case "NO DEFINIDO":
+                return 0;
+            default:
+        }
         return 0;
     }
 
     /**
      * Indica si el propietario tiene categoría VIP.
+     * 
      * @return true si tiene más de 500 horas acumuladas, false en caso contrario
      */
     public boolean esVIP() {
         // TODO: Implementar método usando if simple
-        return false;
+        if (horasAcumuladas > 500) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
